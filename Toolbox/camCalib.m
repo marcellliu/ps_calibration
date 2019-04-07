@@ -1,7 +1,7 @@
 function [imageFileNames,cameraParams] = camCalib(images_folder,squareSize)
 
 	% Get PNG checkerboard images stored in Data/
-    images = dir(fullfile(images_folder, '*.png'));
+    images = dir(fullfile(images_folder, '*.tiff'));
 	nb_images = length(images);
 	for im = 1:nb_images
 		imageFileNames{im} = fullfile(images_folder,images(im).name);
