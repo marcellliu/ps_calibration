@@ -15,12 +15,10 @@ norme = 1./(norm_X_minus_Xs.^(3+mu));
 Ii = shading_anis.*norme;
 
 phi = I./Ii;
-phi = smooth(phi);
 phi = sum(phi)/length(I);
 Ii = Ii*phi;
 
 F = I-Ii;
-
 J = zeros(length(shading),5);
 
 d_shading_x = N(:,1);

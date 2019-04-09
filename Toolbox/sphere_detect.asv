@@ -191,8 +191,8 @@ pt = pt*l;
 f = zeros(length(u),1);
 for i=1:length(u)
 %     d = norm(pt(i,:)-pc,2);
-    t = inv(k)*[u(i);v(i);1];
-    d = norm(cross((pc'-t),t),2)/norm(t);
+    uv = [u(i),v(i),1];
+    
     f(i)=d;
 end
 figure(24)

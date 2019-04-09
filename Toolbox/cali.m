@@ -1,4 +1,4 @@
-function [normalized_shading,x0]=cali(S,theta_12,I,X,N)
+function [e,x0]=cali(S,theta_12,I,X,N)
 X_minus_Xs = bsxfun(@minus,X,S); % Vector from source to surface
 norm_X_minus_Xs = sqrt((sum(X_minus_Xs.^2,2))); % Distance from source to surface
 shading = sum(-bsxfun(@times,N,X_minus_Xs./norm_X_minus_Xs),2); % Shading: normal to surface times normalized lighting vector
@@ -23,14 +23,15 @@ o = 0;
 sumet = 0;
 eb = [];
 E = [];
+maxI = max(I);
 
 T = 1;
-Tl = 1e-03;
+Tl = 1e-2;
 while(T>Tl)
     r = T;
     while(n<it_el&&e>e_el&&o<2)
         [F,J,phi,Ii] = reprojection_error_anisotropic(I,N,X,mu,x0);
-        F(isnan(F)==1) = [];
+        F = F/maxI;
         e = sum(F.^2)/length(F);
         x0(6) = phi;
         switch fl
@@ -68,11 +69,14 @@ while(T>Tl)
             plot(Ii)
             hold off
 %         E = [E e];
-
+%         plot(F)
+%         hold on 
+%         plot(smooth(F))
+%         hold off
         n = n+1;
         fl = rem(fl,5)+1;
     end
-    T = T*0.9;
+    T = T*0.7;
     n = 0;
     o = 0;
 end
